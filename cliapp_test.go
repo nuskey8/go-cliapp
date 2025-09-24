@@ -14,17 +14,12 @@ func TestAddCommand(t *testing.T) {
 		fmt.Printf("%d", a+b)
 	})
 
-	// simulate os.Args
-	old := os.Args
-	defer func() { os.Args = old }()
-	os.Args = []string{"cmd", "add", "2", "3"}
-
 	// capture stdout
 	oldStdout := os.Stdout
 	r, w, _ := os.Pipe()
 	os.Stdout = w
 
-	err := app.Run()
+	err := app.Run("add", "2", "3")
 	w.Close()
 	os.Stdout = oldStdout
 	if err != nil {
@@ -42,10 +37,7 @@ func TestAddCommand(t *testing.T) {
 func TestMissingArg(t *testing.T) {
 	app := New(Options{ExitOnError: false})
 	app.Add("echo", func(s string) {})
-	old := os.Args
-	defer func() { os.Args = old }()
-	os.Args = []string{"cmd", "echo"}
-	err := app.Run()
+	err := app.Run("echo")
 	if err == nil {
 		t.Fatalf("expected error for missing arg")
 	}
@@ -64,12 +56,7 @@ func TestStructArgParsing(t *testing.T) {
 		got = a
 	})
 
-	old := os.Args
-	defer func() { os.Args = old }()
-	// positional input, long out, flag
-	os.Args = []string{"cmd", "create", "hello.txt", "--out=out.txt", "--usemarkdown"}
-
-	err := app.Run()
+	err := app.Run("create", "hello.txt", "--out=out.txt", "--usemarkdown")
 	if err != nil {
 		t.Fatalf("Run failed: %v", err)
 	}

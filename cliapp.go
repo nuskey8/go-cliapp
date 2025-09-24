@@ -110,8 +110,11 @@ func (a *App) Add(name string, rest ...any) {
 }
 
 // Parses arguments and executes the matching command.
-func (a *App) Run() error {
-	args := os.Args[1:]
+func (a *App) Run(args ...string) error {
+	if args == nil {
+		args = os.Args[1:]
+	}
+
 	if len(args) == 0 {
 		// If root handler is registered, show its help as the default; otherwise show global help
 		if a.root != nil {
