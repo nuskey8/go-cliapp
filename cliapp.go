@@ -1,3 +1,4 @@
+// A lightweight command-line application framework for Go
 package cliapp
 
 import (
