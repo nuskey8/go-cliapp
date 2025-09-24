@@ -167,14 +167,14 @@ func main() {
 
 そして以下を実行します。
 
-```bash
+```
 $ go run main echo hello
 hello
 ```
 
 `-h`または`--help`を追加することで、生成されたヘルプメッセージを確認できます。
 
-```bash
+```
 $ go run main echo -h
 Usage:
   echo <args...>
@@ -194,7 +194,7 @@ app.Add("add", func(num1 int, num2 int) {
 })
 ```
 
-```bash
+```
 $ go run main add 1
 wrong number of arguments for add: want 2, got 1
 
@@ -279,7 +279,7 @@ func main() {
 }
 ```
 
-```bash
+```
 $ go run main newtxt -h
 Create a text file from input
 
@@ -316,7 +316,7 @@ type CreateTextArgs struct {
 
 これは以下のような形で利用できます。
 
-```bash
+```
 $ go run main newtxt -h
 Create a text file from input
 
