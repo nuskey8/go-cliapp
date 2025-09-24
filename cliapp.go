@@ -264,7 +264,7 @@ func (a *App) Run(args ...string) error {
 		// last return is error
 		last := res[len(res)-1]
 		if !last.IsNil() {
-			return last.Interface().(error)
+			return a.handleError(last.Interface().(error))
 		}
 	}
 
@@ -292,7 +292,7 @@ func (a *App) printCommonOptions() {
 	fmt.Fprintln(a.opts.Log, "  -h|--help               Show this help")
 }
 
-// getTypeLabel returns a human-readable label for a type
+// Returns a human-readable label for a type
 func getTypeLabel(t reflect.Type) string {
 	if t.Kind() == reflect.Ptr {
 		t = t.Elem()
