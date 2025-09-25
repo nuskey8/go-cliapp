@@ -319,7 +319,8 @@ func (a *App) printHelp() {
 	// indicates options are available. If a root command exists, keep the
 	// previous more verbose usage header.
 	if a.root == nil {
-		fmt.Fprintln(a.opts.Log, "Usage: [options...]")
+		fmt.Fprintln(a.opts.Log, "Usage:")
+		fmt.Fprintln(a.opts.Log, "  [options...]")
 		fmt.Fprintln(a.opts.Log)
 	} else {
 		fmt.Fprintln(a.opts.Log, "Usage:")
@@ -379,7 +380,8 @@ func (a *App) printCommandHelp(name string, h handler) {
 			}
 		}
 		// Usage: cmd <args...>
-		fmt.Fprintf(a.opts.Log, "Usage: %s <args...>\n", cmdName)
+		fmt.Fprintln(a.opts.Log, "Usage:")
+		fmt.Fprintf(a.opts.Log, "  %s <args...>\n", cmdName)
 		fmt.Fprintln(a.opts.Log)
 
 		// Arguments: show arg index, name (argN) and type
@@ -437,10 +439,11 @@ func (a *App) printCommandHelp(name string, h handler) {
 			cmdName = "command"
 		}
 	}
+	fmt.Fprintln(a.opts.Log, "Usage:")
 	if maxPos >= 0 {
-		fmt.Fprintf(a.opts.Log, "Usage: %s <args...> [options...]\n", cmdName)
+		fmt.Fprintf(a.opts.Log, "  %s <args...> [options...]\n", cmdName)
 	} else {
-		fmt.Fprintf(a.opts.Log, "Usage: %s [options...]\n", cmdName)
+		fmt.Fprintf(a.opts.Log, "  %s [options...]\n", cmdName)
 	}
 	fmt.Fprintln(a.opts.Log)
 	fmt.Fprintln(a.opts.Log)
