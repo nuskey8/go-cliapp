@@ -3,32 +3,23 @@ package cliapp
 import (
 	"bytes"
 	"fmt"
-	"os"
 	"testing"
 )
 
 func TestAddCommand(t *testing.T) {
-	app := New(Options{ExitOnError: false})
-	// handler prints sum to stdout
+	var buf bytes.Buffer
+	app := New(Options{ExitOnError: false, Log: &buf})
+	// handler prints sum to app opts Log
 	app.Add("add", func(a int, b int) {
-		fmt.Printf("%d", a+b)
+		fmt.Fprintf(app.opts.Log, "%d", a+b)
 	})
 
-	// capture stdout
-	oldStdout := os.Stdout
-	r, w, _ := os.Pipe()
-	os.Stdout = w
-
 	err := app.Run("add", "2", "3")
-	w.Close()
-	os.Stdout = oldStdout
 	if err != nil {
 		t.Fatalf("Run failed: %v", err)
 	}
 
-	var out bytes.Buffer
-	_, _ = out.ReadFrom(r)
-	got := out.String()
+	got := buf.String()
 	if got != "5" {
 		t.Fatalf("expected '5', got %q", got)
 	}
